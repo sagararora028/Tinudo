@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tinudo - To-Do List</title>
+    <link rel="stylesheet" href="./dist/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Figtree:ital,wght@0,300..900;1,300..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-customBg text-gray-800 flex flex-col h-screen">
+    <header class="flex justify-between items-center px-20 py-4 bg-transparent">
+        <div class="logo">
+            <img src="./Uploads/Logo.svg" alt="Tinudo Logo" class="h-16">
+        </div>
+        <nav class="flex flex-col">
+            <a class="px-6 py-1 bg-gray-800 text-white border border-gray-800 uppercase" target="_blank" rel="noopener noreferrer" href="https://www.sagararora.com/">Portfolio</a>
+            <a class="px-6 py-1 bg-transparent text-gray-800 border border-gray-800 uppercase text-center" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/sagararora372/">LinkedIn</a>
+        </nav>
+    </header>
+    <main class="flex-1 grid grid-cols-[25%_40%_25%] justify-between px-20 py-7">
+        <section class="flex flex-col justify-between">
+            <div class="flex flex-col gap-3">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-lg">LISTS</h2>
+                    <button id="clear-lists" class="px-4 py-2 border border-gray-800 border-dashed gray-500 hover:bg-orange-50 transition-all duration-300" title="Show All Lists">Show All</button>
+                </div>
+                <div class="bg-transparent p-4 rounded-lg border border-gray-300 border-dashed flex flex-col gap-5">
+                    <ul id="category-list" class="mt-2 space-y-2 h-64 overflow-x-hidden overflow-scroll"></ul>
+                    <div class="flex flex-col gap-2">
+                        <input id="list-value" type="text" placeholder="Type your new list name" class="p-2.5 bg-transparent border border-gray-300 w-full">
+                        <button id="add-category" class="px-4 py-2 bg-gray-800 text-white w-full hover:bg-gray-900 hover:shadow-md transition duration-300">Add List</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <img class="pb-3" src="./Uploads/quote.svg" alt="quotation">
+                <blockquote id="quote-container" class="text-lg">
+                    <p>Loading quote...</p>
+                    <cite></cite>
+                </blockquote>
+            </div>
+        </section>
+
+        <section class="relative bg-transparent p-4 rounded-lg border border-gray-300 border-dashed flex flex-col gap-20">
+            <svg class="absolute top-0 left-0 w-full h-full -z-10" width="70%" height="70%" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="sun-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color: #FFBF85; stop-opacity: 1;" />
+                        <stop offset="50%" style="stop-color: #FF9385; stop-opacity: 1;" />
+                        <stop offset="100%" style="stop-color: #FFBF85; stop-opacity: 1;" />
+                    </linearGradient>
+                </defs>
+                <circle cx="100" cy="100" r="70" fill="url(#sun-gradient)" />
+            </svg> 
+            <div class="absolute inset-0 bg-customBg/40 backdrop-blur-lg -z-10"></div>
+            <div class="flex flex-col h-full">
+                <div class="flex items-start border-b border-gray-300 border-dashed justify-between space-x-2 mt-2 w-full pb-5">
+                    <div class="flex gap-3">
+                        <button id="all-tasks-btn" class="tab active px-4 py-2 border border-gray-400 border-dashed text-gray-400 hover:bg-orange-50 transition-all duration-300">All Tasks</button>
+                        <button id="completed-btn" class="tab px-4 py-2 border border-gray-400 border-dashed text-gray-400 hover:bg-orange-50 transition-all duration-300">Completed</button>
+                    </div>
+                    <button id="clear-tasks" class="px-4 py-2 border border-red-500 border-dashed text-red-500 hover:bg-red-50 transition-all duration-300" title="Clear all tasks">Clear All</button>
+                </div>
+                <div class="task-container mt-4 text-center flex-1 items-center justify-center flex flex-col">
+                    <p id="tasks-empty">You can add tasks below my friend!</p>
+                    <ul id="task-list" class="hidden w-full task-list space-y-2 h-full scroll-m-0">
+                    </ul>
+                </div>
+                <div class="pt-5 flex border-t border-gray-300 border-dashed">
+                    <div class="border border-gray-300 w-full p-2 flex gap-4">
+                        <input id="input-value" type="text" placeholder="Add your next task" class="flex-1 flex w-full p-2 bg-transparent">
+                        <div class="flex items-center gap-3">
+                            <div class="relative group"> 
+                                <select id="list-dropdown">
+                                </select>
+                                <!-- <button id="select-list-btn" class="flex items-center border border-customBg hover:border-gray-400 border-dashed transition-all duration-00">
+                                    <img class="h-6" src="./Uploads/list.svg" alt="list_icon">
+                                </button>  
+                                <ul id="list-dropdown" class="py-2 hidden absolute right-1/2 translate-x-1/2 bottom-full mb-4 mt-2 w-40 rounded-lg bg-white border border-gray-300 border-dashed shadow-lg opacity-0 invisible transition-opacity duration-50"></ul> -->
+                            </div>
+                            <button id="add-task-button" class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-900 hover:shadow-md transition duration-300">Add Task</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-8">
+            <div class="flex flex-col gap-3">
+                <h2 class="text-lg">NOTES</h2>
+                <textarea class="bg-transparent p-4 rounded-lg border border-gray-300 border-dashed w-full h-80" placeholder="You can write notes here..."></textarea>
+            </div>
+            <div class="flex flex-col gap-3 flex-1">
+                <h2 class="text-lg flex items-center">
+                    GALLERY 
+                    <span class="ml-2 cursor-pointer">
+                        <div class="relative group">
+                            <img src="./Uploads/info.svg" alt="info"> 
+                            <div class="absolute left-1/2 w-60 text-center bottom-full mb-2 -translate-x-1/2 rounded-md bg-gray-900 text-white text-sm px-3 py-2 opacity-0 invisible transition-opacity duration-300 group-hover:opacity-100 group-hover:visible">
+                                How about you add a picture of your loved one for that extra motivation?
+                                <div class="absolute left-1/2 top-full -translate-x-1/2 border-8 border-transparent border-t-gray-900"></div>
+                            </div>
+                        </div>
+                    </span>
+                </h2>
+                <div class="relative flex flex-col items-center justify-center bg-transparent p-4 rounded-lg border border-gray-300 border-dashed w-full flex-1">
+                    <button class="flex items-center gap-1 add-image px-4 py-2 text-gray-800">
+                        <img src="./Uploads/add.svg" alt="add_icon"><p>Add Image</p>
+                    </button>
+                    <input type="file" class="image-upload hidden" accept="image/*">
+                    <img id="preview-image" class="hidden w-full h-full object-cover rounded-lg absolute"/>
+                    <div id="delete-image" class="group hidden absolute top-3 right-3">
+                        <button><img src="./Uploads/delete_image.svg" alt="delete_icon"></button>
+                        <div class="absolute left-1/2 w-32 text-center bottom-full mb-2 -translate-x-1/2 rounded-md bg-gray-900 text-white text-sm px-3 py-2 opacity-0 invisible transition-opacity duration-300 group-hover:opacity-100 group-hover:visible">
+                            Remove Image?
+                            <div class="absolute left-1/2 top-full -translate-x-1/2 border-8 border-transparent border-t-gray-900"></div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </main>
+    <footer class="flex justify-between items-center px-20 pb-4">
+        <p class="mt-2">&copy; Tinudo. All rights reserved.</p>
+        <p class="mt-2">To be used as a daily todo list...For Now.</p>
+    </footer>   
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>

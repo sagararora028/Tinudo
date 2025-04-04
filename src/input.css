@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply font-sans font-light; /* Uses Inter as the global font */
+}
+
+.active {
+    @apply border-gray-800 text-gray-800;
+}
+
+
+
